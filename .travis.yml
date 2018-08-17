@@ -6,6 +6,11 @@ os:
 julia:
   - 0.6
   - nightly
+before_install:
+  - (sudo apt-get -qq update && sudo apt-get install -y python3 python3-matplotlib)
+script:
+  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+  - julia -e 'Pkg.clone(pwd()); Pkg.build("ModiaMath"); Pkg.test("ModiaMath")'
 notifications:
   email: false
 git:
